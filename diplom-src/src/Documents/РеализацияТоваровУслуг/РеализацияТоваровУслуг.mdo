@@ -166,6 +166,7 @@
       <value>Основание</value>
     </synonym>
     <type>
+      <types>DocumentRef.ВКМ_ОбслуживаниеКлиентов</types>
       <types>DocumentRef.ЗаказПокупателя</types>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
@@ -410,4 +411,12 @@
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
   </tabularSections>
+  <templates uuid="aa99177b-4025-4839-9a72-71b81626b6f8">
+    <name>ВКМ_Док_АктОбОказанииУслуг</name>
+    <synonym>
+      <key>ru</key>
+      <value>Акт об оказании услуг</value>
+    </synonym>
+    <templateType>BinaryData</templateType>
+  </templates>
 </mdclass:Document>

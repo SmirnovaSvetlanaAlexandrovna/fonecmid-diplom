@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f3883175-2d4d-4715-b06f-dee9363af837">
+  <producedTypes>
+    <objectType typeId="a361e420-abf2-4db3-8e1b-17cf63a5fcf7" valueTypeId="bf6ba56e-5e2b-4fa7-9ab3-855f9f5cddba"/>
+    <refType typeId="96fb8b52-6c03-44eb-936b-c433227ad9dd" valueTypeId="384cda80-9cf1-4470-8687-8060990e776f"/>
+    <selectionType typeId="9560415c-20dc-42c3-9809-d61813ef177f" valueTypeId="6f7dfa6c-f7e9-4437-b1c9-5c956d4baf06"/>
+    <listType typeId="f13ddae6-c519-42ac-b399-1d676555cf9f" valueTypeId="d9d56465-ba97-4dd0-a6f4-4fc1b020a0b2"/>
+    <managerType typeId="d790034e-79d7-4e0d-924a-158792097840" valueTypeId="d54d796a-4892-4422-b1e5-5837c3c05b88"/>
+  </producedTypes>
+  <name>ВКМ_УведомленияТелеграмБоту</name>
+  <synonym>
+    <key>ru</key>
+    <value>Уведомления телеграм-боту</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="d30b8e63-f23b-45b7-9bef-3033b0468614">
+    <name>ТекстСообщения</name>
+    <synonym>
+      <key>ru</key>
+      <value>Текст сообщения</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers/>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:StringValue">
+      <value></value>
+    </fillValue>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+</mdclass:Catalog>
