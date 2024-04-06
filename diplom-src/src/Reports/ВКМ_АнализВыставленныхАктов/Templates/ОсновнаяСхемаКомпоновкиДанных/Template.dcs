@@ -7,10 +7,6 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>НаборДанных1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>СуммаКОплате</dataPath>
-			<field>СуммаКОплате</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>Клиент</dataPath>
 			<field>Клиент</field>
 		</field>
@@ -19,44 +15,53 @@
 			<field>Договор</field>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>СуммаПоНоменклатуреПрошлыйМесяц</dataPath>
-			<field>СуммаПоНоменклатуреПрошлыйМесяц</field>
+			<dataPath>СуммаПоАктам</dataPath>
+			<field>СуммаПоАктам</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Сумма по номенклатуре прошлый месяц</v8:content>
+					<v8:content>Сумма по актам</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаВыполненных</dataPath>
+			<field>СуммаВыполненных</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма выполненных</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<dataSource>ИсточникДанных1</dataSource>
-		<query>ВЫБРАТЬ РАЗЛИЧНЫЕ
-	ВКМ_ВыполненныеКлиентуРаботы.Клиент КАК Клиент,
-	ВКМ_ВыполненныеКлиентуРаботы.Договор КАК Договор,
-	СУММА(ВКМ_ВыполненныеКлиентуРаботы.СуммаКОплате) КАК СуммаКОплате
-ПОМЕСТИТЬ вт_СуммаПоНоменклатуреПрошлыйМесяц
+		<query>ВЫБРАТЬ
+	ВКМ_ВыполненныеСотрудникомРаботы.Клиент КАК Клиент,
+	ВКМ_ВыполненныеСотрудникомРаботы.Договор КАК Договор,
+	СУММА(ЕСТЬNULL(ВКМ_ВыполненныеСотрудникомРаботы.СуммаКОплате, 0)) КАК СуммаКОплате
+ПОМЕСТИТЬ вт_ВыполненыеСотрудникомРаботы
 ИЗ
-	РегистрНакопления.ВКМ_ВыполненныеКлиентуРаботы КАК ВКМ_ВыполненныеКлиентуРаботы
+	РегистрНакопления.ВКМ_ВыполненныеСотрудникомРаботы КАК ВКМ_ВыполненныеСотрудникомРаботы
 ГДЕ
-	ВКМ_ВыполненныеКлиентуРаботы.Период &gt;= &amp;НачалоПериодаПрошлыйМесяц
-	И ВКМ_ВыполненныеКлиентуРаботы.Период &lt;= &amp;ОкончаниеПериодаПрошлыйМесяц
-	И ВКМ_ВыполненныеКлиентуРаботы.НоменклатураРаботыСпециалиста = &amp;НоменклатураРаботыСпециалиста
+	ВКМ_ВыполненныеСотрудникомРаботы.Период &gt;= &amp;НачалоПериода
+	И ВКМ_ВыполненныеСотрудникомРаботы.Период &lt;= &amp;ОкончаниеПериода
 
 СГРУППИРОВАТЬ ПО
-	ВКМ_ВыполненныеКлиентуРаботы.Клиент,
-	ВКМ_ВыполненныеКлиентуРаботы.Договор
+	ВКМ_ВыполненныеСотрудникомРаботы.Клиент,
+	ВКМ_ВыполненныеСотрудникомРаботы.Договор
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 ВЫБРАТЬ
 	ВКМ_ВыполненныеКлиентуРаботы.Клиент КАК Клиент,
 	ВКМ_ВыполненныеКлиентуРаботы.Договор КАК Договор,
-	СУММА(ВКМ_ВыполненныеКлиентуРаботы.СуммаКОплате) КАК СуммаКОплате,
-	вт_СуммаПоНоменклатуреПрошлыйМесяц.СуммаКОплате КАК СуммаПоНоменклатуреПрошлыйМесяц
+	СУММА(ЕСТЬNULL(ВКМ_ВыполненныеКлиентуРаботы.СуммаКОплате, 0)) КАК СуммаПоАктам,
+	ЕСТЬNULL(вт_ВыполненыеСотрудникомРаботы.СуммаКОплате, 0) КАК СуммаВыполненных
 ИЗ
 	РегистрНакопления.ВКМ_ВыполненныеКлиентуРаботы КАК ВКМ_ВыполненныеКлиентуРаботы
-		ЛЕВОЕ СОЕДИНЕНИЕ вт_СуммаПоНоменклатуреПрошлыйМесяц КАК вт_СуммаПоНоменклатуреПрошлыйМесяц
-		ПО ВКМ_ВыполненныеКлиентуРаботы.Клиент = вт_СуммаПоНоменклатуреПрошлыйМесяц.Клиент
-			И ВКМ_ВыполненныеКлиентуРаботы.Договор = вт_СуммаПоНоменклатуреПрошлыйМесяц.Договор
+		ЛЕВОЕ СОЕДИНЕНИЕ вт_ВыполненыеСотрудникомРаботы КАК вт_ВыполненыеСотрудникомРаботы
+		ПО ВКМ_ВыполненныеКлиентуРаботы.Клиент = вт_ВыполненыеСотрудникомРаботы.Клиент
+			И ВКМ_ВыполненныеКлиентуРаботы.Договор = вт_ВыполненыеСотрудникомРаботы.Договор
 ГДЕ
 	ВКМ_ВыполненныеКлиентуРаботы.Период &gt;= &amp;НачалоПериода
 	И ВКМ_ВыполненныеКлиентуРаботы.Период &lt;= &amp;ОкончаниеПериода
@@ -64,7 +69,7 @@
 СГРУППИРОВАТЬ ПО
 	ВКМ_ВыполненныеКлиентуРаботы.Клиент,
 	ВКМ_ВыполненныеКлиентуРаботы.Договор,
-	вт_СуммаПоНоменклатуреПрошлыйМесяц.СуммаКОплате</query>
+	ЕСТЬNULL(вт_ВыполненыеСотрудникомРаботы.СуммаКОплате, 0)</query>
 	</dataSet>
 	<parameter>
 		<name>НачалоПериода</name>
@@ -121,73 +126,6 @@
 		<useRestriction>false</useRestriction>
 		<denyIncompleteValues>true</denyIncompleteValues>
 	</parameter>
-	<parameter>
-		<name>НачалоПериодаПрошлыйМесяц</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Начало периода прошлый месяц</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;ПредыдущийМесяц.ДатаНачала</expression>
-	</parameter>
-	<parameter>
-		<name>ОкончаниеПериодаПрошлыйМесяц</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Окончание периода прошлый месяц</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;ПредыдущийМесяц.ДатаОкончания</expression>
-	</parameter>
-	<parameter>
-		<name>ПредыдущийМесяц</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Предыдущий месяц</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>v8:StandardPeriod</v8:Type>
-		</valueType>
-		<value xsi:type="v8:StandardPeriod">
-			<v8:variant xsi:type="v8:StandardPeriodVariant">LastMonth</v8:variant>
-		</value>
-		<useRestriction>true</useRestriction>
-	</parameter>
-	<parameter>
-		<name>НоменклатураРаботыСпециалиста</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Номенклатура работы специалиста</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.Номенклатура</v8:Type>
-		</valueType>
-		<value xsi:nil="true"/>
-		<useRestriction>false</useRestriction>
-		<denyIncompleteValues>true</denyIncompleteValues>
-	</parameter>
 	<settingsVariant>
 		<dcsset:name>Основной</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
@@ -200,10 +138,10 @@
 					<dcsset:field>Договор</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>СуммаКОплате</dcsset:field>
+					<dcsset:field>СуммаПоАктам</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>СуммаПоНоменклатуреПрошлыйМесяц</dcsset:field>
+					<dcsset:field>СуммаВыполненных</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:dataParameters>
@@ -213,17 +151,6 @@
 						<v8:variant xsi:type="v8:StandardPeriodVariant">ThisMonth</v8:variant>
 					</dcscor:value>
 					<dcsset:userSettingID>eeafd7dd-6033-4b10-a8ac-34f609d8186c</dcsset:userSettingID>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>ПредыдущийМесяц</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardPeriod">
-						<v8:variant xsi:type="v8:StandardPeriodVariant">LastMonth</v8:variant>
-					</dcscor:value>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>НоменклатураРаботыСпециалиста</dcscor:parameter>
-					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>6b9baf80-af45-44bf-8f68-a0686c7ed662</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:outputParameters>

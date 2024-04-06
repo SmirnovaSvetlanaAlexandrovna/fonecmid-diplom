@@ -33,19 +33,6 @@
     <maxValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
   </resources>
-  <attributes uuid="05706d04-e967-4c1f-aa1d-2b00ae85242a">
-    <name>Выплачено</name>
-    <synonym>
-      <key>ru</key>
-      <value>Выплачено</value>
-    </synonym>
-    <type>
-      <types>Boolean</types>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-  </attributes>
   <dimensions uuid="67839e71-c567-497a-9cb4-f030178c568d">
     <name>Сотрудник</name>
     <synonym>

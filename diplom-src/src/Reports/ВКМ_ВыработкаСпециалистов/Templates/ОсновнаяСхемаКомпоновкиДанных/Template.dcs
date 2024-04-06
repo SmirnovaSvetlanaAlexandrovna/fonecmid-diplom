@@ -9,6 +9,9 @@
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Сотрудник</dataPath>
 			<field>Сотрудник</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>СуммаКОплате</dataPath>
@@ -20,18 +23,16 @@
 		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<query>ВЫБРАТЬ
-	ВКМ_ВыполненныеСотрудникомРаботы.Сотрудник КАК Сотрудник,
-	СУММА(ЕСТЬNULL(ВКМ_ВыполненныеСотрудникомРаботы.ЧасовКОплате, 0)) КАК ЧасовКОплате,
-	СУММА(ЕСТЬNULL(ВКМ_ВыполненныеСотрудникомРаботы.СуммаКОплате, 0)) КАК СуммаКОплате
+	ВКМ_ВыполненныеСотрудникомРаботыОбороты.Сотрудник КАК Сотрудник,
+	СУММА(ВКМ_ВыполненныеСотрудникомРаботыОбороты.ЧасовКОплатеОборот) КАК ЧасовКОплате,
+	СУММА(ВКМ_ВыполненныеСотрудникомРаботыОбороты.СуммаКОплатеОборот) КАК СуммаКОплате
 ИЗ
-	РегистрНакопления.ВКМ_ВыполненныеСотрудникомРаботы КАК ВКМ_ВыполненныеСотрудникомРаботы
+	РегистрНакопления.ВКМ_ВыполненныеСотрудникомРаботы.Обороты(&amp;НачалоПериода, &amp;КонецПериода, , ) КАК ВКМ_ВыполненныеСотрудникомРаботыОбороты
 ГДЕ
-	ВКМ_ВыполненныеСотрудникомРаботы.Период &gt;= &amp;НачалоПериода
-	И ВКМ_ВыполненныеСотрудникомРаботы.Период &lt;= &amp;КонецПериода
-	И ВКМ_ВыполненныеСотрудникомРаботы.Сотрудник = &amp;Сотрудник
+	ВКМ_ВыполненныеСотрудникомРаботыОбороты.Сотрудник = &amp;Сотрудник
 
 СГРУППИРОВАТЬ ПО
-	ВКМ_ВыполненныеСотрудникомРаботы.Сотрудник</query>
+	ВКМ_ВыполненныеСотрудникомРаботыОбороты.Сотрудник</query>
 	</dataSet>
 	<parameter>
 		<name>КонецПериода</name>
@@ -72,22 +73,6 @@
 		<availableAsField>false</availableAsField>
 	</parameter>
 	<parameter>
-		<name>Сотрудник</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Сотрудник</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.Пользователи</v8:Type>
-		</valueType>
-		<value xsi:nil="true"/>
-		<useRestriction>false</useRestriction>
-		<denyIncompleteValues>true</denyIncompleteValues>
-		<use>Always</use>
-	</parameter>
-	<parameter>
 		<name>ПериодОтчета</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
@@ -107,6 +92,21 @@
 		<denyIncompleteValues>true</denyIncompleteValues>
 		<use>Always</use>
 	</parameter>
+	<parameter>
+		<name>Сотрудник</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Сотрудник</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.Пользователи</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<use>Always</use>
+	</parameter>
 	<settingsVariant>
 		<dcsset:name>Основной</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
@@ -116,18 +116,13 @@
 					<dcsset:field>Сотрудник</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>СуммаКОплате</dcsset:field>
+					<dcsset:field>ЧасовКОплате</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>ЧасовКОплате</dcsset:field>
+					<dcsset:field>СуммаКОплате</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:dataParameters>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>Сотрудник</dcscor:parameter>
-					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>599e34a9-321a-4600-9114-1467b30e6360</dcsset:userSettingID>
-				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>ПериодОтчета</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
@@ -136,6 +131,12 @@
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
 					<dcsset:userSettingID>d28145ef-55f1-4d0c-9504-26b58e4e34d9</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Сотрудник</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>6127232e-4ff8-4f94-8ae5-e4790df7d538</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:outputParameters>

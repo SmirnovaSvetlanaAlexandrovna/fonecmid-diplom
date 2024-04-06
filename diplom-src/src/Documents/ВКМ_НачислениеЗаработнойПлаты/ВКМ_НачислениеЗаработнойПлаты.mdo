@@ -87,10 +87,10 @@
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
     <attributes uuid="ed652a13-f07a-43fc-915b-e1c64b66c497">
-      <name>ОтпускДатаС</name>
+      <name>ДатаС</name>
       <synonym>
         <key>ru</key>
-        <value>Отпуск дата С</value>
+        <value>Дата С</value>
       </synonym>
       <type>
         <types>Date</types>
@@ -104,16 +104,30 @@
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
     <attributes uuid="da3f0041-1f0c-4608-aafd-ee1bee08b2f7">
-      <name>ОтпускДатаПо</name>
+      <name>ДатаПо</name>
       <synonym>
         <key>ru</key>
-        <value>Отпуск дата по</value>
+        <value>Дата по</value>
       </synonym>
       <type>
         <types>Date</types>
         <dateQualifiers>
           <dateFractions>Date</dateFractions>
         </dateQualifiers>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="390a2878-ae56-4732-ac68-2519979fcb10">
+      <name>ГрафикРаботы</name>
+      <synonym>
+        <key>ru</key>
+        <value>График работы</value>
+      </synonym>
+      <type>
+        <types>CatalogRef.ВКМ_ГрафикиРаботы</types>
       </type>
       <minValue xsi:type="core:UndefinedValue"/>
       <maxValue xsi:type="core:UndefinedValue"/>
